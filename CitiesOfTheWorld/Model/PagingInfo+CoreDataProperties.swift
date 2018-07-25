@@ -16,7 +16,7 @@ extension PagingInfo {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PagingInfo> {
         return NSFetchRequest<PagingInfo>(entityName: "PagingInfo")
     }
-
+    
     @NSManaged public var lastPage: Int16
     @NSManaged public var lastCachedPage: Int16
 

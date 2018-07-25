@@ -11,7 +11,15 @@ import UIKit
 class MainTableViewController: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     
-    private var cities = [City]()
+    private var cities = [City]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    private let provider = CityProvider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +31,11 @@ class MainTableViewController: UITableViewController {
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.definesPresentationContext = true
+        
+        // Start the cities fetch
+        provider.getNewCitiesPagewithCompletionHandler { (cities) -> (Void) in
+            self.cities = cities
+        }
     }
     
     // MARK: UITableViewDelegate

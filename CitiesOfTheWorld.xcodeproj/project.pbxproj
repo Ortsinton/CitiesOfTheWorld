@@ -19,6 +19,9 @@
 		611371E221077D0D004AAE7A /* PagingInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371DE21077D0D004AAE7A /* PagingInfo+CoreDataProperties.swift */; };
 		611371E321077D0D004AAE7A /* Country+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371DF21077D0D004AAE7A /* Country+CoreDataClass.swift */; };
 		611371E421077D0D004AAE7A /* Country+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371E021077D0D004AAE7A /* Country+CoreDataProperties.swift */; };
+		611371E721086503004AAE7A /* CityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371E621086503004AAE7A /* CityProvider.swift */; };
+		611371E921086707004AAE7A /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371E821086707004AAE7A /* HTTPClient.swift */; };
+		611371EB2108881C004AAE7A /* CoreDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371EA2108881C004AAE7A /* CoreDataUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		611371DE21077D0D004AAE7A /* PagingInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PagingInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		611371DF21077D0D004AAE7A /* Country+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+CoreDataClass.swift"; sourceTree = "<group>"; };
 		611371E021077D0D004AAE7A /* Country+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		611371E621086503004AAE7A /* CityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityProvider.swift; sourceTree = "<group>"; };
+		611371E821086707004AAE7A /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		611371EA2108881C004AAE7A /* CoreDataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,7 @@
 				611371DE21077D0D004AAE7A /* PagingInfo+CoreDataProperties.swift */,
 				611371DF21077D0D004AAE7A /* Country+CoreDataClass.swift */,
 				611371E021077D0D004AAE7A /* Country+CoreDataProperties.swift */,
+				611371E621086503004AAE7A /* CityProvider.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -105,6 +112,8 @@
 		611371CA2107771F004AAE7A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				611371E821086707004AAE7A /* HTTPClient.swift */,
+				611371EA2108881C004AAE7A /* CoreDataUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -182,13 +191,16 @@
 			files = (
 				611371E221077D0D004AAE7A /* PagingInfo+CoreDataProperties.swift in Sources */,
 				611371DC21077CDF004AAE7A /* City+CoreDataProperties.swift in Sources */,
+				611371EB2108881C004AAE7A /* CoreDataUtils.swift in Sources */,
 				611371DB21077CDF004AAE7A /* City+CoreDataClass.swift in Sources */,
 				611371B5210742FA004AAE7A /* MainTableViewController.swift in Sources */,
 				611371BB210742FA004AAE7A /* CitiesOfTheWorld.xcdatamodeld in Sources */,
 				611371B3210742FA004AAE7A /* AppDelegate.swift in Sources */,
+				611371E921086707004AAE7A /* HTTPClient.swift in Sources */,
 				611371E321077D0D004AAE7A /* Country+CoreDataClass.swift in Sources */,
 				611371E121077D0D004AAE7A /* PagingInfo+CoreDataClass.swift in Sources */,
 				611371E421077D0D004AAE7A /* Country+CoreDataProperties.swift in Sources */,
+				611371E721086503004AAE7A /* CityProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
