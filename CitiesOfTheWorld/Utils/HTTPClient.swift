@@ -19,7 +19,7 @@ class HTTPClient: NSObject {
         var components = URLComponents(string: HOSTNAME)!
         components.queryItems = [URLQueryItem(name: KEY_PAGE, value: String(pageNumber)),
                                  URLQueryItem(name: KEY_INCLUDE, value: VALUE_COUNTRY)]
-        fetchCitiesFromAPI(requestComponents: components, withCompletionHandler: completionHandler)
+        fetchCitiesFromAPI(requestComponents: components, withFilterString: "", withCompletionHandler: completionHandler)
     }
     
     public static func filterCitiesByString(_ string: String, forPageNumber pageNumber: Int16, withCompletionHandler completionHandler: @escaping (([City]) -> (Void))) {
@@ -27,10 +27,10 @@ class HTTPClient: NSObject {
         components.queryItems = [URLQueryItem(name: KEY_FILTER_CONTAINS, value: string),
                                  URLQueryItem(name: KEY_PAGE, value: String(pageNumber)),
                                  URLQueryItem(name: KEY_INCLUDE, value: VALUE_COUNTRY)]
-        fetchCitiesFromAPI(requestComponents: components, withCompletionHandler: completionHandler)
+        fetchCitiesFromAPI(requestComponents: components, withFilterString: string, withCompletionHandler: completionHandler)
     }
     
-    private static func fetchCitiesFromAPI(requestComponents: URLComponents, withCompletionHandler completionHandler: @escaping (([City]) -> (Void))) {
+    private static func fetchCitiesFromAPI(requestComponents: URLComponents, withFilterString filterString: String, withCompletionHandler completionHandler: @escaping (([City]) -> (Void))) {
         var request = URLRequest(url: requestComponents.url!)
         request.httpMethod = "GET"
         
@@ -52,7 +52,7 @@ class HTTPClient: NSObject {
 
             do {
                 let jsonMessage = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                let cities = CityParser.parseCitiesFromHttpResponse(jsonMessage)
+                let cities = CityParser.parseCitiesFromHttpResponse(jsonMessage, withFilterString: filterString)
                 completionHandler(cities)
             }
             catch let error {

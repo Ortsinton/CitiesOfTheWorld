@@ -82,12 +82,17 @@ public class CityParser {
             // First we try to get the city from the cache. If it's not there, we create a new value.
             var city = City.getCityMatchingId(cityId)
             
-            if city == nil {
+            if city == nil || city?.pageNumber == 0 {
                 // Parse city info
-                city = City(context: CoreDataUtils.shared.persistentContainer.viewContext)
+                // If the city is nil we create it from the scratch. If not, it means we already cached it from a filtered search, in that case we just update the page number to the correct one.
+                if city == nil {
+                    city = City(context: CoreDataUtils.shared.persistentContainer.viewContext)
+                }
                 city!.name = item[KEY_NAME] as? String
                 city!.id = cityId
-                city!.pageNumber = Int16(currentPage)
+                
+                //If we're filtering we don't want to store the pageNumber. We just set a placeholder.
+                city!.pageNumber = filterString.isEmpty ? Int16(currentPage) : 0
                 if let latitude = item[KEY_LATITUDE] as? Double,
                     let longitude = item[KEY_LONGITUDE] as? Double {
                     city!.latitude = latitude
