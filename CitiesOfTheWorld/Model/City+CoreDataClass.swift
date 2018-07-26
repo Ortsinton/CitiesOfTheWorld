@@ -12,6 +12,18 @@ import CoreData
 
 @objc(City)
 public class City: NSManagedObject {
+    public static func getCityMatchingId(_ cityId: Int16) -> City? {
+        do {
+            let fetchRequest: NSFetchRequest = City.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == \(cityId)")
+            let city = try CoreDataUtils.shared.persistentContainer.viewContext.fetch(fetchRequest)
+            return city.count > 0 ? city[0] : nil
+        }
+        catch {
+            print("Error while fetching cities from Core Data")
+            return nil
+        }
+    }
     
     public static func getCitiesFromPage(_ pageNumber: Int16) -> [City] {
         let fetchRequest:NSFetchRequest = City.fetchRequest()
@@ -37,12 +49,17 @@ public class CityParser {
     static let KEY_COUNTRY_ID = "country_id"
     static let KEY_COUNTRY = "country"
     
+    // Convenience method created for the base case.
     public static func parseCitiesFromHttpResponse(_ jsonResponse: Any) -> [City] {
+        return parseCitiesFromHttpResponse(jsonResponse, withFilterString: "")
+    }
+    
+    public static func parseCitiesFromHttpResponse(_ jsonResponse: Any, withFilterString filterString: String) -> [City] {
         guard let jsonResponse = jsonResponse as? [String:Any],
-              let data = jsonResponse[KEY_DATA] as? [String:Any],
-              let items = data[KEY_ITEMS] as? [[String:Any]] else {
-            // It should never get inside here unless there was something going on with the server response.
-            return []
+            let data = jsonResponse[KEY_DATA] as? [String:Any],
+            let items = data[KEY_ITEMS] as? [[String:Any]] else {
+                // It should never get inside here unless there was something going on with the server response.
+                return []
         }
         
         // First we retrieve pagination info. It will be useful later on.
@@ -62,16 +79,20 @@ public class CityParser {
             guard let cityId = item[KEY_ID] as? Int16 else {
                 continue
             }
+            // First we try to get the city from the cache. If it's not there, we create a new value.
+            var city = City.getCityMatchingId(cityId)
             
-            // Parse city info
-            let city = City(context: CoreDataUtils.shared.persistentContainer.viewContext)
-            city.name = item[KEY_NAME] as? String
-            city.id = cityId
-            city.pageNumber = Int16(currentPage)
-            if let latitude = item[KEY_LATITUDE] as? Double,
-                let longitude = item[KEY_LONGITUDE] as? Double {
-                city.latitude = latitude
-                city.longitude = longitude
+            if city == nil {
+                // Parse city info
+                city = City(context: CoreDataUtils.shared.persistentContainer.viewContext)
+                city!.name = item[KEY_NAME] as? String
+                city!.id = cityId
+                city!.pageNumber = Int16(currentPage)
+                if let latitude = item[KEY_LATITUDE] as? Double,
+                    let longitude = item[KEY_LONGITUDE] as? Double {
+                    city!.latitude = latitude
+                    city!.longitude = longitude
+                }
             }
             
             // Parse Country info
@@ -85,9 +106,9 @@ public class CityParser {
                     country!.name = countryInfo[KEY_NAME] as? String
                     country!.id = countryId
                 }
-                city.country = country!
+                city!.country = country!
             }
-            cities.append(city)
+            cities.append(city!)
         }
         
         // In the last step, we commit changes to the db so they're persisted.

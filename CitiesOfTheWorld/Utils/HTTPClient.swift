@@ -13,13 +13,25 @@ class HTTPClient: NSObject {
     private static let KEY_PAGE = "page"
     private static let KEY_INCLUDE = "include"
     private static let VALUE_COUNTRY = "country"
+    private static let KEY_FILTER_CONTAINS = "filter[0][name][contains]"
     
     public static func fetchCitiesPageNumber(_ pageNumber: Int16, withCompletionHandler completionHandler: @escaping (([City]) -> (Void))) {
         var components = URLComponents(string: HOSTNAME)!
         components.queryItems = [URLQueryItem(name: KEY_PAGE, value: String(pageNumber)),
                                  URLQueryItem(name: KEY_INCLUDE, value: VALUE_COUNTRY)]
-        
-        var request = URLRequest(url: components.url!)
+        fetchCitiesFromAPI(requestComponents: components, withCompletionHandler: completionHandler)
+    }
+    
+    public static func filterCitiesByString(_ string: String, forPageNumber pageNumber: Int16, withCompletionHandler completionHandler: @escaping (([City]) -> (Void))) {
+        var components = URLComponents(string: HOSTNAME)!
+        components.queryItems = [URLQueryItem(name: KEY_FILTER_CONTAINS, value: string),
+                                 URLQueryItem(name: KEY_PAGE, value: String(pageNumber)),
+                                 URLQueryItem(name: KEY_INCLUDE, value: VALUE_COUNTRY)]
+        fetchCitiesFromAPI(requestComponents: components, withCompletionHandler: completionHandler)
+    }
+    
+    private static func fetchCitiesFromAPI(requestComponents: URLComponents, withCompletionHandler completionHandler: @escaping (([City]) -> (Void))) {
+        var request = URLRequest(url: requestComponents.url!)
         request.httpMethod = "GET"
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -37,10 +49,7 @@ class HTTPClient: NSObject {
                 completionHandler([])
                 return
             }
-            
-            let message = String(data: data, encoding: .utf8)
-            // TODO: REMOVE THIS.
-            print(message ?? "")
+
             do {
                 let jsonMessage = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 let cities = CityParser.parseCitiesFromHttpResponse(jsonMessage)
@@ -51,9 +60,5 @@ class HTTPClient: NSObject {
             }
         }
         task.resume()
-    }
-    
-    public func filterCitiesByString(_ string: String) {
-        
     }
 }

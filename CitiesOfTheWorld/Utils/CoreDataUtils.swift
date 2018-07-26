@@ -11,6 +11,7 @@ import CoreData
 
 class CoreDataUtils: NSObject {
     public static var shared = CoreDataUtils()
+    private let dispatchQueue = DispatchQueue(label: "CoreData dispatch queue")
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
@@ -42,16 +43,17 @@ class CoreDataUtils: NSObject {
     
     // MARK: - Core Data Saving support
     
+    // We force all context saves in our own queue so we don't try by mistake to call it concurrently.
     func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        dispatchQueue.async {
+            let context = self.persistentContainer.viewContext
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Core Data error \(nserror), \(nserror.userInfo)")
+                }
             }
         }
     }
