@@ -31,6 +31,7 @@ class MainTableViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
+        searchController.hidesNavigationBarDuringPresentation = false
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.definesPresentationContext = true
@@ -118,6 +119,15 @@ class MainTableViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         })
+    }
+    
+    // MARK: Navigarion
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let vc = segue.destination as? MapViewController else {
+            return
+        }
+        
+        vc.cities = filteredCities.count > 0 ? filteredCities : cities
     }
 }
 

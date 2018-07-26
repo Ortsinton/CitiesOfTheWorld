@@ -22,6 +22,7 @@
 		611371E921086707004AAE7A /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371E821086707004AAE7A /* HTTPClient.swift */; };
 		611371EB2108881C004AAE7A /* CoreDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371EA2108881C004AAE7A /* CoreDataUtils.swift */; };
 		611371EF2108CCFC004AAE7A /* PagingInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371ED2108CCFC004AAE7A /* PagingInfo+CoreDataProperties.swift */; };
+		611371F12109E173004AAE7A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611371F02109E173004AAE7A /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		611371E821086707004AAE7A /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		611371EA2108881C004AAE7A /* CoreDataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataUtils.swift; sourceTree = "<group>"; };
 		611371ED2108CCFC004AAE7A /* PagingInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PagingInfo+CoreDataProperties.swift"; path = "../../PagingInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		611371F02109E173004AAE7A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			children = (
 				611371B4210742FA004AAE7A /* MainTableViewController.swift */,
 				611371B6210742FA004AAE7A /* Main.storyboard */,
+				611371F02109E173004AAE7A /* MapViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				611371B5210742FA004AAE7A /* MainTableViewController.swift in Sources */,
 				611371BB210742FA004AAE7A /* CitiesOfTheWorld.xcdatamodeld in Sources */,
 				611371B3210742FA004AAE7A /* AppDelegate.swift in Sources */,
+				611371F12109E173004AAE7A /* MapViewController.swift in Sources */,
 				611371EF2108CCFC004AAE7A /* PagingInfo+CoreDataProperties.swift in Sources */,
 				611371E921086707004AAE7A /* HTTPClient.swift in Sources */,
 				611371E321077D0D004AAE7A /* Country+CoreDataClass.swift in Sources */,
